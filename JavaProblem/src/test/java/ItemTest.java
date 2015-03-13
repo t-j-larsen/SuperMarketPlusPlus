@@ -34,7 +34,7 @@ public class ItemTest {
 	
 	@Test
 	public void testQualityNotMoreThanDefaultMax() {
-		StandardItem item = new StandardItem("standard item", 1, 51);
+		StandardItem item = new StandardItem("standard item", 7, 51);
 		Assert.assertEquals(StandardItem.DEFAUL_MAX_QUALITY, item.getQuality());
 		item.setQuality(52);
 		Assert.assertEquals(StandardItem.DEFAUL_MAX_QUALITY, item.getQuality());
@@ -42,7 +42,7 @@ public class ItemTest {
 	
 	@Test
 	public void testQualityNotMoreThanCustomerMax() {
-		StandardItem item = new StandardItem("standard item", 1, 51, 80);
+		StandardItem item = new StandardItem("standard item", 7, 51, 80);
 		Assert.assertEquals(51, item.getQuality());
 		item.setQuality(81);
 		Assert.assertEquals(80, item.getQuality());
@@ -50,7 +50,10 @@ public class ItemTest {
 	
 	@Test
 	public void testIncreaseInQuality() {
-		assertTrue(true);
+		StandardItem item = new StandardItem("standard item", 7, 25);
+		item.setDelta(-1);
+		item.updateQuality();
+		Assert.assertEquals(26, item.getQuality());
 	}
 	
 	@Test
