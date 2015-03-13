@@ -15,7 +15,7 @@ public class ItemTest {
 	}
 	
 	@Test
-	public void testQualityDegradesTwiceAsFast() {
+	public void testQualityDegradesTwiceAsFastAfterExpiry() {
 		StandardItem item = new StandardItem("standard item", 2, 50);
 		item.updateQuality();
 		Assert.assertEquals(49, item.getQuality());
@@ -72,7 +72,13 @@ public class ItemTest {
 	}
 	
 	@Test
-	public void testOrganicBananas() {
-		assertTrue(true);
+	public void testDoubleDegradationSpeed() {
+		StandardItem item = new StandardItem("Organic bananas", 2, 25);
+		item.setDegradationSpeed(2);
+		item.updateQuality();
+		Assert.assertEquals(23, item.getQuality());
+		Assert.assertEquals(1, item.getSellIn());
+		item.updateQuality();
+		Assert.assertEquals(19, item.getQuality()); // double time after expiry		
 	}
 }
