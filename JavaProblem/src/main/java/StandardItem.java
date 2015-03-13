@@ -7,7 +7,8 @@ public class StandardItem extends Item {
 	
 	private int maxQuality = DEFAUL_MAX_QUALITY;
 	
-	private int delta = 1; // decrease in quality per day
+	private int qualityDelta = 1; // decrease in quality per day
+	private boolean expires = true;
 	
 	public StandardItem(String name, int sellIn, int quality) {
 		this(name, sellIn, quality, DEFAUL_MAX_QUALITY);
@@ -20,15 +21,17 @@ public class StandardItem extends Item {
 	}
 	
 	public void updateQuality() {
-		sellIn = sellIn - 1;
+		if (expires) {
+			sellIn = sellIn - 1;
+		}
 		if (quality > 0) {
 			// TODO: confirm exactly the behaviour when sellIn = 0
 			if (sellIn > 0) {
-				setQuality(quality - delta);	
+				setQuality(quality - qualityDelta);	
 			}
 			else {
 				if (quality > 1) {
-					setQuality(quality = quality - (2 * delta));
+					setQuality(quality = quality - (2 * qualityDelta));
 				}
 			}
 		}
@@ -45,9 +48,12 @@ public class StandardItem extends Item {
 		}
 	}
 
-	public void setDelta(int delta) {
-		this.delta = delta;
+	public void setQualityDelta(int delta) {
+		this.qualityDelta = delta;
 	}
-	
+
+	public void setExpires(boolean expires) {
+		this.expires = expires;
+	}
 	
 }
