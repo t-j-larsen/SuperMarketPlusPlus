@@ -1,3 +1,4 @@
+// TODO: Move to a separate package
 
 import java.util.ArrayList;
 import java.util.List;
@@ -5,9 +6,7 @@ import java.util.List;
 
 public class SuperMarketPlusPlus {
 
-	// TODO: Better to use instance variables and methods instead of static ones
-	
-	private static List<Item> items = null;
+	private List<StandardItem> items = null;
 
 	/**
 	 * @param args
@@ -16,93 +15,65 @@ public class SuperMarketPlusPlus {
 		
         System.out.println("Starting Supermarket Plus Plus");
 		
-        items = new ArrayList<Item>();
-        items.add(new Item("Thermal Vest", 10, 20));
-        items.add(new Item("Aged Brie", 2, 0));
-        items.add(new Item("Chicken", 5, 7));
-        items.add(new Item("Sulfuras", 0, 80));
-        items.add(new Item("Backstage Passes", 15, 20));
-        items.add(new Item("Ginger Cake", 3, 6));
+        SuperMarketPlusPlus market = new SuperMarketPlusPlus();
+        List<StandardItem>items = new ArrayList<StandardItem>();
+        items.add(new StandardItem("Thermal Vest", 10, 20));
+        items.add(new StandardItem("Chicken", 5, 7));       
+        items.add(new StandardItem("Ginger Cake", 3, 6));
+        
+        StandardItem agedBrie = new StandardItem("Aged Brie", 2, 0);
+        agedBrie.setQualityDelta(-1);
+        items.add(agedBrie);
+        
+        items.add(new StandardItem("Sulfuras", 0, 80, 80));
+        
+        items.add(new StandardItem("Backstage Passes", 15, 20) {
+			@Override 
+			public void updateQuality() {
+				sellIn = sellIn - 1;
+				if (sellIn > 10) {
+					setQuality(quality + 1);
+				}
+				else if (sellIn > 5) {
+					setQuality(quality + 2);
+				}
+				else if (sellIn >= 0) {
+					setQuality(quality + 3);;
+				}
+				else {
+					quality = 0;
+				}
+			}
+		});
+        
+        // new products
+        
+		StandardItem organicBananas = new StandardItem("Organic bananas", 2, 25);
+		organicBananas.setDegradationSpeed(2);
+		items.add(organicBananas);
+        
+        market.setItems(items);
+        market.updateQuality();
+	}
 
-        updateQuality();
-}
-
-
+	public SuperMarketPlusPlus() 
+	{
 	
-    public static void updateQuality()
+	}
+	
+    public void updateQuality()
     {
-        for (int i = 0; i < items.size(); i++)
-        {
-            if ((!"Aged Brie".equals(items.get(i).getName())) && !"Backstage Passes".equals(items.get(i).getName())) 
-            {
-                if (items.get(i).getQuality() > 0)
-                {
-                    if (!"Sulfuras".equals(items.get(i).getName()))
-                    {
-                        items.get(i).setQuality(items.get(i).getQuality() - 1);
-                    }
-                }
-            }
-            else
-            {
-                if (items.get(i).getQuality() < 50)
-                {
-                    items.get(i).setQuality(items.get(i).getQuality() + 1);
-
-                    if ("Backstage Passes".equals(items.get(i).getName()))
-                    {
-                        if (items.get(i).getSellIn() < 11)
-                        {
-                            if (items.get(i).getQuality() < 50)
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() + 1);
-                            }
-                        }
-
-                        if (items.get(i).getSellIn() < 6)
-                        {
-                            if (items.get(i).getQuality() < 50)
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() + 1);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!"Sulfuras".equals(items.get(i).getName()))
-            {
-                items.get(i).setSellIn(items.get(i).getSellIn() - 1);
-            }
-
-            if (items.get(i).getSellIn() < 0)
-            {
-                if (!"Aged Brie".equals(items.get(i).getName()))
-                {
-                    if (!"Backstage Passes".equals(items.get(i).getName()))
-                    {
-                        if (items.get(i).getQuality() > 0)
-                        {
-                            if (!"Sulfuras".equals(items.get(i).getName()))
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() - 1);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        items.get(i).setQuality(items.get(i).getQuality() - items.get(i).getQuality());
-                    }
-                }
-                else
-                {
-                    if (items.get(i).getQuality() < 50)
-                    {
-                        items.get(i).setQuality(items.get(i).getQuality() + 1);
-                    }
-                }
-            }
+        for (StandardItem item : items) {
+        	item.updateQuality();
         }
     }
+
+	public List<StandardItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<StandardItem> items) {
+		this.items = items;
+	}
 
 }
