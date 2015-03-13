@@ -1,8 +1,3 @@
-import java.util.Map;
-
-
-
-
 public class StandardItem extends Item {
 
 	public static final int DEFAUL_MAX_QUALITY = 50;
@@ -10,8 +5,8 @@ public class StandardItem extends Item {
 	private int maxQuality = DEFAUL_MAX_QUALITY;
 	
 	private int qualityDelta = 1; // decrease in quality per day
-	private boolean expires = true;
-	private int degradationSpeed = 1; // some items expire at multiple times the normal rate
+	private boolean expires = true; // whether or not the sellIn value should decrease or not each day
+	private int degradationSpeed = 1; // some items expire at multiple times the normal rate e.g twice as fast
 	
 	public StandardItem(String name, int sellIn, int quality) {
 		this(name, sellIn, quality, DEFAUL_MAX_QUALITY);
@@ -62,6 +57,5 @@ public class StandardItem extends Item {
 	public void setDegradationSpeed(int expirySpeed) {
 		this.degradationSpeed = expirySpeed;
 	}
-	
 	
 }

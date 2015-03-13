@@ -1,5 +1,3 @@
-// TODO: Move to a separate package
-
 import java.util.ArrayList;
 import java.util.List;
 
