@@ -68,7 +68,46 @@ public class ItemTest {
 	
 	@Test
 	public void testBackstagePasses() {
-		assertTrue(true);
+		StandardItem item = new StandardItem("Backstage pass", 12, 1) {
+			@Override 
+			public void updateQuality() {
+				sellIn = sellIn - 1;
+				if (sellIn > 10) {
+					quality += 1;
+				}
+				else if (sellIn > 5) {
+					quality += 2;
+				}
+				else if (sellIn >= 0) {
+					quality += 3;
+				}
+				else {
+					quality = 0;
+				}
+			}
+		};
+		item.updateQuality();
+		Assert.assertEquals(2, item.getQuality()); // 11 days left
+		item.updateQuality();
+		Assert.assertEquals(4, item.getQuality()); // 10 days left		
+		item.updateQuality();
+		Assert.assertEquals(6, item.getQuality()); // 9 days left
+		item.updateQuality();
+		item.updateQuality();
+		item.updateQuality();
+		Assert.assertEquals(12, item.getQuality()); // 6 days left
+		item.updateQuality();
+		Assert.assertEquals(15, item.getQuality()); // 5 days left
+		item.updateQuality();
+		Assert.assertEquals(18, item.getQuality()); // 4 days left
+		item.updateQuality();
+		item.updateQuality();
+		item.updateQuality();
+		Assert.assertEquals(27, item.getQuality()); // 1 days left
+		item.updateQuality();
+		Assert.assertEquals(30, item.getQuality()); // 0 days left
+		item.updateQuality();
+		Assert.assertEquals(0, item.getQuality()); // -1 days left
 	}
 	
 	@Test
