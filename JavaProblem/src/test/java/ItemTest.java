@@ -73,13 +73,13 @@ public class ItemTest {
 			public void updateQuality() {
 				sellIn = sellIn - 1;
 				if (sellIn > 10) {
-					quality += 1;
+					setQuality(quality + 1);
 				}
 				else if (sellIn > 5) {
-					quality += 2;
+					setQuality(quality + 2);
 				}
 				else if (sellIn >= 0) {
-					quality += 3;
+					setQuality(quality + 3);;
 				}
 				else {
 					quality = 0;
