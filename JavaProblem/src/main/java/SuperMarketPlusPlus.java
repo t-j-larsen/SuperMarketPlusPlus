@@ -1,9 +1,12 @@
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class SuperMarketPlusPlus {
 
+	// TODO: Better to use instance variables and methods instead of static ones
+	
 	private static List<Item> items = null;
 
 	/**
