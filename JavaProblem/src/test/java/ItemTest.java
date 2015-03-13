@@ -16,7 +16,12 @@ public class ItemTest {
 	
 	@Test
 	public void testQualityDegradesTwiceAsFast() {
-		assertTrue(true);
+		StandardItem item = new StandardItem("standard item", 2, 100);
+		item.updateQuality();
+		Assert.assertEquals(99, item.getQuality());
+		item.updateQuality();
+		Assert.assertEquals(97, item.getQuality());
+
 	}
 	
 	@Test
