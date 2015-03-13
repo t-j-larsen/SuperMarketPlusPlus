@@ -21,12 +21,15 @@ public class ItemTest {
 		Assert.assertEquals(99, item.getQuality());
 		item.updateQuality();
 		Assert.assertEquals(97, item.getQuality());
-
 	}
 	
 	@Test
 	public void testQualityNeverNegative() {
-		assertTrue(true);
+		StandardItem item = new StandardItem("standard item", 7, 1);
+		item.updateQuality();
+		Assert.assertEquals(0, item.getQuality());
+		item.updateQuality();
+		Assert.assertEquals(0, item.getQuality());		
 	}
 	
 	@Test
